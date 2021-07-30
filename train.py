@@ -1,10 +1,10 @@
 from argparse import ArgumentParser
 from pytorch_lightning import Trainer
 from pytorch_lightning.utilities.seed import seed_everything
+from pytorch_lightning import loggers as pl_loggers
 
 from datamodules.bases import MNISTDataModule
 from models.bases import MNISTModel
-from models.bases import LitMNIST
 
 
 seed_everything(42)
@@ -16,9 +16,9 @@ parser = Trainer.add_argparse_args(parser)
 args = parser.parse_args()
 
 model = MNISTModel(args)
-# model = LitMNIST()
 datamodule = MNISTDataModule(args)
-trainer = Trainer.from_argparse_args(args)
+wandb_logger = pl_loggers.WandbLogger()
+trainer = Trainer.from_argparse_args(args, logger=wandb_logger)
 
 trainer.fit(model, datamodule)
 trainer.test(model, datamodule=datamodule)
