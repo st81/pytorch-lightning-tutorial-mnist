@@ -4,7 +4,7 @@ from typing import Union
 import yaml
 
 
-def override_args_by_config_file(
+def set_args_by_config_file(
     args: Namespace, path: Union[Path, str] = Path("configs/default.yaml")
 ) -> Namespace:
     with open(Path(path), "r") as f:
