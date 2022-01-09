@@ -1,4 +1,5 @@
 from typing import Optional, Union, List
+import os
 from argparse import ArgumentParser, Namespace
 from torch.utils.data import random_split
 from torch.utils.data.dataloader import DataLoader
@@ -13,7 +14,7 @@ class MNISTDataModule(pl.LightningDataModule):
         data_dir: str = "data",
         batch_size: int = 256,
         train_size: float = 0.7,
-        num_workers: int = 4,
+        num_workers: int = os.cpu_count(),
         pin_memory: bool = True,
     ) -> None:
         super().__init__()
