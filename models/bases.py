@@ -9,15 +9,20 @@ import torchmetrics
 
 class MNISTModel(pl.LightningModule):
     @staticmethod
-    def add_argparse_args(parenet_parser: ArgumentParser) -> ArgumentParser:
+    def add_model_specific_args(parenet_parser: ArgumentParser) -> ArgumentParser:
         parser = parenet_parser.add_argument_group("MNISTModel")
         parser.add_argument("--learning_rate", type=float, default=2e-4)
         parser.add_argument("--hidden_size", type=int, default=64)
         return parenet_parser
 
-    def __init__(self, args) -> None:
+    def __init__(
+        self,
+        learning_rate: float,
+        hidden_size: int,
+        **kwargs,
+    ) -> None:
         super().__init__()
-        self.save_hyperparameters(args)
+        self.save_hyperparameters()
 
         # dataset specific attributes
         self.num_classes = 10

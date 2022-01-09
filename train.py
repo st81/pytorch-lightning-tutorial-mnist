@@ -11,12 +11,12 @@ seed_everything(42)
 
 parser = ArgumentParser()
 parser = MNISTDataModule.add_argparse_args(parser)
-parser = MNISTModel.add_argparse_args(parser)
+parser = MNISTModel.add_model_specific_args(parser)
 parser = Trainer.add_argparse_args(parser)
 args = parser.parse_args()
 
 datamodule  = MNISTDataModule.from_argparse_args(args)
-model = MNISTModel(args)
+model = MNISTModel(**args.__dict__)
 # wandb_logger = pl_loggers.WandbLogger()
 trainer = Trainer.from_argparse_args(args, )
 
