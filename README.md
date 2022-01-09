@@ -1,7 +1,7 @@
 # How to run
 
 ```sh
-bash train.bash
+python train.py
 ```
 
 # Expected output
@@ -9,9 +9,13 @@ bash train.bash
 ```sh
 --------------------------------------------------------------------------------
 DATALOADER:0 TEST RESULTS
-{'Test/Accuracy': 0.91839998960495, 'Test/loss': 0.28283143043518066}
+{'Test/Accuracy': 0.9186999797821045, 'Test/loss': 0.28279516100883484}
 --------------------------------------------------------------------------------
 ```
+
+# Notes
+
+config file (e.g. `configs/default.yaml` ) overrides command line arguments.
 
 # References
 

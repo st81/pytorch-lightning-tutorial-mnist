@@ -5,6 +5,7 @@ from pytorch_lightning import loggers as pl_loggers
 
 from datamodules.bases import MNISTDataModule
 from models.bases import MNISTModel
+from utils import override_args_by_config_file
 
 
 seed_everything(42)
@@ -14,6 +15,7 @@ parser = MNISTDataModule.add_argparse_args(parser)
 parser = MNISTModel.add_model_specific_args(parser)
 parser = Trainer.add_argparse_args(parser)
 args = parser.parse_args()
+args = override_args_by_config_file(args)
 
 datamodule = MNISTDataModule.from_argparse_args(args)
 model = MNISTModel(**args.__dict__)
