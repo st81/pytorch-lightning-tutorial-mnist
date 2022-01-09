@@ -72,7 +72,7 @@ class MNISTModel(pl.LightningModule):
         return loss
 
     def validation_epoch_end(self, outputs) -> None:
-        self.log("Accuracy/val", self.val_acc.compute())
+        self.log("Accuracy/val", self.val_acc.compute(), prog_bar=True)
 
     def test_step(self, batch, batch_idx):
         x, y = batch
@@ -88,6 +88,11 @@ class MNISTModel(pl.LightningModule):
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)
+
+    def optimizer_zero_grad(
+        self, epoch: int, batch_idx: int, optimizer, optimizer_idx: int
+    ):
+        optimizer.zero_grad(set_to_none=True)
 
 
 class LitMNIST(pl.LightningModule):
