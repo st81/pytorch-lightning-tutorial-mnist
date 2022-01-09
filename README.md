@@ -13,10 +13,6 @@ DATALOADER:0 TEST RESULTS
 --------------------------------------------------------------------------------
 ```
 
-# Notes
-
-config file (e.g. `configs/default.yaml` ) overrides command line arguments.
-
 # References
 
 - [Introduction to Pytorch Lightning — PyTorch Lightning 1.4.0dev documentation](https://pytorch-lightning.readthedocs.io/en/latest/notebooks/lightning_examples/mnist-hello-world.html)

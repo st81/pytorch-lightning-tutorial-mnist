@@ -10,5 +10,6 @@ def override_args_by_config_file(
     with open(Path(path), "r") as f:
         config = yaml.load(f, yaml.FullLoader)
     for k, v in config.items():
-        setattr(args, k, v)
+        if getattr(args, k) is None:
+            setattr(args, k, v)
     return args
