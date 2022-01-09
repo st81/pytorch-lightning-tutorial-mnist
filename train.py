@@ -15,10 +15,10 @@ parser = MNISTModel.add_argparse_args(parser)
 parser = Trainer.add_argparse_args(parser)
 args = parser.parse_args()
 
+datamodule  = MNISTDataModule.from_argparse_args(args)
 model = MNISTModel(args)
-datamodule = MNISTDataModule(args)
-wandb_logger = pl_loggers.WandbLogger()
-trainer = Trainer.from_argparse_args(args, logger=wandb_logger)
+# wandb_logger = pl_loggers.WandbLogger()
+trainer = Trainer.from_argparse_args(args, )
 
 trainer.fit(model, datamodule)
 trainer.test(model, datamodule=datamodule)

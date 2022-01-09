@@ -8,19 +8,13 @@ import pytorch_lightning as pl
 
 
 class MNISTDataModule(pl.LightningDataModule):
-    @staticmethod
-    def add_argparse_args(parent_parser: ArgumentParser) -> ArgumentParser:
-        parser = parent_parser.add_argument_group("MNISTDataModule")
-        parser.add_argument("--data_dir", type=str, default="data")
-        parser.add_argument("--batch_size", type=int, default=256)
-        parser.add_argument("--train_size", type=float, default=0.7)
-        return parent_parser
-
-    def __init__(self, args: Namespace) -> None:
+    def __init__(
+        self, data_dir: str = "data", batch_size: int = 256, train_size: float = 0.7
+    ) -> None:
         super().__init__()
-        self.data_dir = args.data_dir
-        self.batch_size = args.batch_size
-        self.train_size = args.train_size
+        self.data_dir = data_dir
+        self.batch_size = batch_size
+        self.train_size = train_size
 
     def prepare_data(self) -> None:
         MNIST(root=self.data_dir, train=True, download=True)
@@ -30,7 +24,10 @@ class MNISTDataModule(pl.LightningDataModule):
         transform = Compose([ToTensor(), Normalize((0.1307,), (0.3081))])
         if stage in (None, "fit"):
             dataset = MNIST(
-                root=self.data_dir, train=True, download=False, transform=transform,
+                root=self.data_dir,
+                train=True,
+                download=False,
+                transform=transform,
             )
             num_data = len(dataset)
             self.train_dataset, self.val_dataset = random_split(
@@ -42,7 +39,10 @@ class MNISTDataModule(pl.LightningDataModule):
             )
         if stage in (None, "test"):
             self.test_dataset = MNIST(
-                root=self.data_dir, train=False, download=False, transform=transform,
+                root=self.data_dir,
+                train=False,
+                download=False,
+                transform=transform,
             )
 
     def train_dataloader(self) -> Union[DataLoader, List[DataLoader]]:
