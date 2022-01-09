@@ -9,12 +9,19 @@ import pytorch_lightning as pl
 
 class MNISTDataModule(pl.LightningDataModule):
     def __init__(
-        self, data_dir: str = "data", batch_size: int = 256, train_size: float = 0.7
+        self,
+        data_dir: str = "data",
+        batch_size: int = 256,
+        train_size: float = 0.7,
+        num_workers: int = 4,
+        pin_memory: bool = True,
     ) -> None:
         super().__init__()
         self.data_dir = data_dir
         self.batch_size = batch_size
         self.train_size = train_size
+        self.num_workers = num_workers
+        self.pin_memory = pin_memory
 
     def prepare_data(self) -> None:
         MNIST(root=self.data_dir, train=True, download=True)
@@ -46,10 +53,25 @@ class MNISTDataModule(pl.LightningDataModule):
             )
 
     def train_dataloader(self) -> Union[DataLoader, List[DataLoader]]:
-        return DataLoader(self.train_dataset, batch_size=self.batch_size)
+        return DataLoader(
+            self.train_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            pin_memory=self.pin_memory,
+        )
 
     def val_dataloader(self) -> Union[DataLoader, List[DataLoader]]:
-        return DataLoader(self.val_dataset, batch_size=self.batch_size)
+        return DataLoader(
+            self.val_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            pin_memory=self.pin_memory,
+        )
 
     def test_dataloader(self) -> Union[DataLoader, List[DataLoader]]:
-        return DataLoader(self.test_dataset, batch_size=self.batch_size)
+        return DataLoader(
+            self.test_dataset,
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            pin_memory=self.pin_memory,
+        )
