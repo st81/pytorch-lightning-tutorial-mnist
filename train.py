@@ -29,6 +29,8 @@ def main(args: Namespace) -> None:
     trainer: Trainer = Trainer.from_argparse_args(
         args,
     )
+    if args.auto_lr_find or args.auto_scale_batch_size is not None:
+        trainer.tune(model, datamodule)
 
     trainer.fit(model, datamodule)
     trainer.test(model, datamodule=datamodule)
