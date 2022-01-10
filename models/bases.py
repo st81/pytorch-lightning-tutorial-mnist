@@ -50,25 +50,27 @@ class MNISTModel(pl.LightningModule):
         x = self.model(x)
         return F.log_softmax(x, dim=1)
 
-    def training_step(self, batch, batch_idx):
+    def shared_step(self, batch, batch_idx, stage):
         x, y = batch
         logits = self(x)
         loss = F.nll_loss(logits, y)
-        self.log("Loss/train", loss, on_step=False, on_epoch=True)
+        self.log(f"Loss/{stage}", loss, on_step=False, on_epoch=True)
         preds = torch.argmax(logits, dim=1)
-        self.train_acc(preds, y)
+        if stage == "train":
+            self.train_acc(preds, y)
+        elif stage == "val":
+            self.val_acc(preds, y)
+        return loss
+
+    def training_step(self, batch, batch_idx):
+        loss = self.shared_step(batch, batch_idx, "train")
         return loss
 
     def training_epoch_end(self, outputs) -> None:
         self.log("Accuracy/train", self.train_acc.compute())
 
     def validation_step(self, batch, batch_idx):
-        x, y = batch
-        logits = self(x)
-        loss = F.nll_loss(logits, y)
-        self.log("Loss/val", loss, on_step=False, on_epoch=True)
-        preds = torch.argmax(logits, dim=1)
-        self.val_acc(preds, y)
+        loss = self.shared_step(batch, batch_idx, "val")
         return loss
 
     def validation_epoch_end(self, outputs) -> None:
