@@ -1,8 +1,11 @@
 import pytorch_lightning as pl
+from pytorch_lightning.utilities.seed import seed_everything
 
 from datamodules.bases import MNISTDataModule
 from models.bases import MNISTModel
 
+
+seed_everything(42)
 
 datamodule = MNISTDataModule()
 datamodule.setup("fit")
