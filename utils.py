@@ -5,11 +5,15 @@ import yaml
 
 
 def set_args_by_config_file(
-    args: Namespace, path: Union[Path, str] = Path("configs/default.yaml")
+    args: Namespace,
+    is_overrode=False,
+    path: Union[Path, str] = Path("configs/default.yaml"),
 ) -> Namespace:
     with open(Path(path), "r") as f:
         config = yaml.load(f, yaml.FullLoader)
     for k, v in config.items():
-        if getattr(args, k) is None:
+        if is_overrode:
+            setattr(args, k, v)
+        elif getattr(args, k) is None:
             setattr(args, k, v)
     return args

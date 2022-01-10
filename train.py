@@ -18,7 +18,7 @@ def prepare_parser() -> ArgumentParser:
 
 def prepare_args(parser: ArgumentParser) -> Namespace:
     args = parser.parse_args()
-    args = set_args_by_config_file(args)
+    args = set_args_by_config_file(args, is_overrode=True)
     return args
 
 
@@ -26,14 +26,17 @@ def main(args: Namespace) -> None:
     datamodule = MNISTDataModule.from_argparse_args(args)
     model = MNISTModel(**args.__dict__)
     # wandb_logger = pl_loggers.WandbLogger()
+    print(args.max_epochs)
+    print(args.deterministic)
     trainer: Trainer = Trainer.from_argparse_args(
         args,
     )
+
     trainer.fit(model, datamodule)
     trainer.test(model, datamodule=datamodule)
 
 
 if __name__ == "__main__":
-    seed_everything(42)
+    seed_everything(42, workers=True)
     args = prepare_args(prepare_parser())
     main(args)

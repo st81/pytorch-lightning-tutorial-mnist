@@ -5,7 +5,7 @@ from datamodules.bases import MNISTDataModule
 from models.bases import MNISTModel
 
 
-seed_everything(42)
+seed_everything(42, workers=True)
 
 datamodule = MNISTDataModule()
 datamodule.setup("fit")
