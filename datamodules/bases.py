@@ -18,6 +18,7 @@ class MNISTDataModule(pl.LightningDataModule):
         pin_memory: bool = True,
     ) -> None:
         super().__init__()
+        self.save_hyperparameters()
         self.data_dir = data_dir
         self.batch_size = batch_size
         self.train_size = train_size
