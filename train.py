@@ -26,8 +26,6 @@ def main(args: Namespace) -> None:
     datamodule = MNISTDataModule.from_argparse_args(args)
     model = MNISTModel(**args.__dict__)
     # wandb_logger = pl_loggers.WandbLogger()
-    print(args.max_epochs)
-    print(args.deterministic)
     trainer: Trainer = Trainer.from_argparse_args(
         args,
     )
