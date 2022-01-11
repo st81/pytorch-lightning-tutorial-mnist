@@ -5,3 +5,4 @@ lightning_logs/
 wandb/
 set_env_variables.bash
 py37/
+output/

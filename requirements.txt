@@ -3,3 +3,5 @@ torchvision
 pytorch_lightning
 numpy
 black
+rich
+wandb

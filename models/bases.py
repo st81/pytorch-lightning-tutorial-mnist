@@ -54,7 +54,7 @@ class MNISTModel(pl.LightningModule):
         x, y = batch
         logits = self(x)
         loss = F.nll_loss(logits, y)
-        self.log(f"Loss/{stage}", loss, on_step=False, on_epoch=True)
+        self.log(f"loss_{stage}", loss, on_step=False, on_epoch=True)
         preds = torch.argmax(logits, dim=1)
         if stage == "train":
             self.train_acc(preds, y)
@@ -67,26 +67,26 @@ class MNISTModel(pl.LightningModule):
         return loss
 
     def training_epoch_end(self, outputs) -> None:
-        self.log("Accuracy/train", self.train_acc.compute())
+        self.log("acc_train", self.train_acc.compute())
 
     def validation_step(self, batch, batch_idx):
         loss = self.shared_step(batch, batch_idx, "val")
         return loss
 
     def validation_epoch_end(self, outputs) -> None:
-        self.log("Accuracy/val", self.val_acc.compute(), prog_bar=True)
+        self.log("acc_val", self.val_acc.compute(), prog_bar=True)
 
     def test_step(self, batch, batch_idx):
         x, y = batch
         logits = self(x)
         loss = F.nll_loss(logits, y)
-        self.log("Test/loss", loss, on_step=False, on_epoch=True)
+        self.log("test_loss", loss, on_step=False, on_epoch=True)
         preds = torch.argmax(logits, dim=1)
         self.test_acc(preds, y)
         return loss
 
     def test_epoch_end(self, outputs) -> None:
-        self.log("Test/Accuracy", self.test_acc.compute())
+        self.log("test_acc", self.test_acc.compute())
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)
