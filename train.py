@@ -1,4 +1,6 @@
 from argparse import ArgumentParser, Namespace
+
+from dotenv import load_dotenv
 from pytorch_lightning import Trainer
 from pytorch_lightning.utilities.seed import seed_everything
 from pytorch_lightning import loggers as pl_loggers
@@ -40,6 +42,7 @@ def main(args: Namespace) -> None:
 
 
 if __name__ == "__main__":
+    load_dotenv()
     seed_everything(42, workers=True)
     args = prepare_args(prepare_parser())
     main(args)

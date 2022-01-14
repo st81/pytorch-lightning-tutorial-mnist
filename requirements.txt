@@ -5,3 +5,4 @@ numpy
 black
 rich
 wandb
+python-dotenv

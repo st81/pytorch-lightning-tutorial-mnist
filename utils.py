@@ -56,5 +56,6 @@ def prepare_loggers() -> List[LightningLoggerBase]:
         WandbLogger(
             name=now(),
             project="pytorch-lightning-tutorial-mnist",
+            id="1x6nqfou",
         )
     ]
