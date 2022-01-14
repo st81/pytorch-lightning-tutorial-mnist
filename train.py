@@ -7,21 +7,8 @@ from pytorch_lightning import loggers as pl_loggers
 
 from datamodules.bases import MNISTDataModule
 from models.bases import MNISTModel
-from utils import prepare_callbacks, set_args_by_config_file, prepare_loggers
-
-
-def prepare_parser() -> ArgumentParser:
-    parser = ArgumentParser()
-    parser = MNISTDataModule.add_argparse_args(parser)
-    parser = MNISTModel.add_model_specific_args(parser)
-    parser = Trainer.add_argparse_args(parser)
-    return parser
-
-
-def prepare_args(parser: ArgumentParser) -> Namespace:
-    args = parser.parse_args()
-    args = set_args_by_config_file(args, is_overrode=True)
-    return args
+from utils.argparse import prepare_args, prepare_parser
+from utils.utils import prepare_callbacks, prepare_loggers
 
 
 def main(args: Namespace) -> None:
@@ -30,9 +17,8 @@ def main(args: Namespace) -> None:
     # wandb_logger = pl_loggers.WandbLogger()
     trainer: Trainer = Trainer.from_argparse_args(
         args,
-        default_root_dir="dir",
-        callbacks=prepare_callbacks(),
-        logger=prepare_loggers(),
+        callbacks=prepare_callbacks(args.is_swa),
+        logger=prepare_loggers(args.wandb_id),
     )
     if args.auto_lr_find or args.auto_scale_batch_size is not None:
         trainer.tune(model, datamodule)
