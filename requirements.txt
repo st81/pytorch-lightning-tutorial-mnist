@@ -6,3 +6,4 @@ black
 rich
 wandb
 python-dotenv
+deepspeed
