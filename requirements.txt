@@ -1,9 +1,6 @@
-torch
-torchvision
-pytorch_lightning
-numpy
-black
-rich
-wandb
-python-dotenv
-deepspeed
+torctorch==2.0.0
+torchvision==0.15.1
+pytorch-lightning==1.8.5
+torchmetrics==1.3.2
+numpy==1.26.2
+wandb==0.16.1
