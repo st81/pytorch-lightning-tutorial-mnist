@@ -1,11 +1,11 @@
-from typing import Optional, Union, List
 import os
-from argparse import ArgumentParser, Namespace
+from typing import List, Optional, Union
+
+import pytorch_lightning as pl
 from torch.utils.data import random_split
 from torch.utils.data.dataloader import DataLoader
 from torchvision.datasets import MNIST
-from torchvision.transforms import Compose, ToTensor, Normalize
-import pytorch_lightning as pl
+from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class MNISTDataModule(pl.LightningDataModule):

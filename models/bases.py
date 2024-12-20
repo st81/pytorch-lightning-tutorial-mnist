@@ -1,10 +1,10 @@
 from argparse import ArgumentParser
-import torch
-from torch import Tensor
-from torch import nn
-import torch.nn.functional as F
+
 import pytorch_lightning as pl
+import torch
+import torch.nn.functional as F
 import torchmetrics
+from torch import Tensor, nn
 
 
 class MNISTModel(pl.LightningModule):
@@ -41,10 +41,10 @@ class MNISTModel(pl.LightningModule):
             nn.Linear(self.hparams.hidden_size, self.num_classes),
         )
 
-        # metrics
-        self.train_acc = torchmetrics.Accuracy()
-        self.val_acc = torchmetrics.Accuracy()
-        self.test_acc = torchmetrics.Accuracy()
+        # TODO: Do not hardcode the number of classes
+        self.train_acc = torchmetrics.Accuracy(task="multiclass", num_classes=10)
+        self.val_acc = torchmetrics.Accuracy(task="multiclass", num_classes=10)
+        self.test_acc = torchmetrics.Accuracy(task="multiclass", num_classes=10)
 
     def forward(self, x) -> Tensor:
         x = self.model(x)

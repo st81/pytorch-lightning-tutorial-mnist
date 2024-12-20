@@ -1,13 +1,14 @@
-from typing import List, Optional
 from datetime import datetime
+from typing import List, Optional
 
 from pytorch_lightning.callbacks import (
     Callback,
     ModelCheckpoint,
     StochasticWeightAveraging,
 )
-from pytorch_lightning.loggers.base import LightningLoggerBase
 from pytorch_lightning.loggers import WandbLogger
+
+# from pytorch_lightning.loggers.base import LightningLoggerBase
 
 
 def now() -> str:
@@ -31,11 +32,11 @@ def prepare_callbacks(is_swa: bool = False) -> List[Callback]:
     return callbacks
 
 
-def prepare_loggers(wandb_id: Optional[str] = None) -> List[LightningLoggerBase]:
-    return [
-        WandbLogger(
-            name=now(),
-            project="pytorch-lightning-tutorial-mnist",
-            id=wandb_id if wandb_id != "" else None,
-        )
-    ]
+# def prepare_loggers(wandb_id: Optional[str] = None) -> List[LightningLoggerBase]:
+#     return [
+#         WandbLogger(
+#             name=now(),
+#             project="pytorch-lightning-tutorial-mnist",
+#             id=wandb_id if wandb_id != "" else None,
+#         )
+#     ]

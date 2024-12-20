@@ -1,8 +1,8 @@
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 from typing import Union
-import yaml
 
+import yaml
 from pytorch_lightning import Trainer
 
 from datamodules.bases import MNISTDataModule
