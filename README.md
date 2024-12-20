@@ -1,7 +1,7 @@
 # How to run
 
 ```sh
-python train.py
+bash train.bash
 ```
 
 # Expected output
